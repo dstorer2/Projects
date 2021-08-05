@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Dashboard</title>
+</head>
+<body>
+    <nav>
+        <div class="navleft">
+            <h1>Welcome, {{user.first_name}} {{user.last_name}}!</h1>
+        </div>
+        <div class="navright">
+            <a href="/add_event">Host a shindig!</a>
+            <a href="/edit_profile">Edit Your Information</a>
+            <a href="/logoff" class="btn btn-dark">Logoff</a>
+        </div>
+    </nav>
+    <div class="canvas">
+        <div class="container">
+            {% if user.address_id == 1 %}
+            <div class="left">
+                <p>Please add your address if you would like to have shindigs at your place!</p>
+                <a href="/edit_address">Add address</a>
+            </div>
+            {% endif %}
+            <div class="left">
+                <a href="/add_friendship">Add some friends!</a>
+            </div>
+            <div class="left">
+                <h3>Shindig's you're hosting!</h3>
+                <div class="info">
+                    {% if events %}
+                    {% for event in events %}
+                    <p>You're hosting 
+                        <a href="view_event/{{ event.id }}">{{ event.title }}</a>
+                        on {{ event.date }}!
+                    </p>
+                    {% endfor %}
+                    {% else %}
+                    <p>You're not hosting any shindigs... <a href="/add_event">Plan one!</a></p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="left">
+                <h3>Upcoming shindig's you've RSVP'd to!</h3>
+                <div class="info">
+                    {% if rsvps %}
+                    {% for rsvp in rsvps %}
+                    <p>You're going to {{rsvp.event.host.first_name}}'s event:
+                        <a href="show_event/{{ rsvp.event.id }}">{{ rsvp.event.title }}</a>
+                        on {{ rsvp.event.date }} at {{ rsvp.event.location.user.first_name }} {{ rsvp.event.location.user.first_name }}'s place!
+                    </p>
+                    {% endfor %}
+                    {% else %}
+                    <p>No upcoming events</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="left">
+                <h3>Pending Invites</h3>
+                <div class="info">
+                    {% if invites %}
+                    {% for invite in invites %}
+                    <p>{{ invite.event.host.first_name }} invited you to their event:
+                        <a href="view_invite/{{ invite.id}}">{{ invite.event.title }}</a>
+                        on {{ invite.event.date }}. Status: {{ invite.status }}
+                    </p>
+                    {% endfor %}
+                    {% else %}
+                    <p>No Pending invites!</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
