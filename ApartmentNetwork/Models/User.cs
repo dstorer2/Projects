@@ -22,6 +22,7 @@ namespace ApartmentNetwork
         [EmailAddress]
         [Display(Name = "Email:")]
         public string Email {get; set; }
+        [Required]
         public string AptNumber {get; set; }
         [Required]
         [DataType(DataType.Password)]
@@ -34,11 +35,13 @@ namespace ApartmentNetwork
         [Display(Name = "Confirm Password:")]
         [NotMapped]
         public string Confirm {get; set; }
+        public bool IsAdmin {get; set; } = false;
         public DateTime CreatedAt {get; set; } = DateTime.Now;
         public DateTime UpdatedAt {get; set; } = DateTime.Now;
-        public int AdminBuildingId {get; set; }
-        public Building AdminOfBuilding {get; set; }
-        public int ResidenceId {get; set; }
-        public List<Post> PostedItems {get; set; }
+        public List<Comment> UserComments {get; set; }
+        public List<Event> UserEvents {get; set; }
+        public List<Bulletin> UserBulletins {get; set; }
+        public int BuildingId {get; set; }
+        public Building Residence {get; set; }
     }
 }

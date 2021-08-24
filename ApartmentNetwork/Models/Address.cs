@@ -10,9 +10,13 @@ namespace ApartmentNetwork
     {
         [Key]
         public int AddressId {get; set; }
+        [Required]
         public string AddressLine1 {get; set; }
+        [Required]
         public string City {get; set; }
+        [Required]
         public string State {get; set; }
+        [Required]
         public int ZipCode {get; set; }
         public DateTime CreatedAt {get; set; } = DateTime.Now;
         public DateTime UpdatedAt {get; set; } = DateTime.Now;

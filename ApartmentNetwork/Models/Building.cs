@@ -14,10 +14,9 @@ namespace ApartmentNetwork
         [Display(Name = "Building Name: ")]
         public string BuildingName {get; set; }
         public int AddressId {get; set; }
-
+        public Address Address {get; set; }
         public DateTime CreatedAt {get; set; } = DateTime.Now;
         public DateTime UpdatedAt {get; set; } = DateTime.Now;
-        public Address Address {get; set; }
         public int UserId {get; set; }
         public User Admin {get; set; }
         public List<User> Residents {get; set; }

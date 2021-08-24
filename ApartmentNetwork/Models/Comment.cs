@@ -6,17 +6,15 @@ using ApartmentNetwork.Models;
 
 namespace ApartmentNetwork
 {
-    public class Post
+    public class Comment
     {
         [Key]
-        public int PostId {get; set; }
+        public int CommentId {get; set; }
         [Required]
-        [Display(Name = "Title: ")]
-        public string Title {get; set; }
-        [Required]
-        [Display(Name = "Description: ")]
-        public string Description {get; set; }
+        public string Content {get; set; }
+        public DateTime CreatedAt {get; set; } = DateTime.Now;
+        public DateTime UpdatedAt {get; set; } = DateTime.Now;
         public int UserId {get; set; }
-        public User Poster {get; set; }
+        public User Creator {get; set; }
     }
 }
