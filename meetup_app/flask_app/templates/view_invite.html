@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Display Shindig</title>
+</head>
+<body>
+    <nav>
+        <div class="navleft">
+            <h1>Shindig!</h1>
+        </div>
+        <div class="navright">
+            <a href="/dashboard">Home</a>
+            <a href="/" class="btn btn-dark">Logoff</a>
+        </div>
+    </nav>
+    <div class="canvas">
+        <div class="container">
+            <div class="left">
+                <h1>You've been invited to {{ invite.event.title }}!</h1>
+                <div class="info">
+                    <p>Hosted by {{ invite.event.host.first_name }} {{ invite.event.host.last_name }}</p>
+                    <p>Description:</p>
+                    <p>{{ invite.event.description }}</p>
+                    <p>Time: </p>
+                    <p>{{ invite.event.date }}</p>
+                </div>
+            </div>
+            {% if invite.invitee_id == session['user_id'] %}
+            <div class="left">
+                <h1>You're invited! </h1>
+                <p>Invite Status: </p>
+                <p>{{ invite.status }}</p>
+                <form action="/toggle_invite" method='POST'>
+                    <h3>Let {{ invite.event.host.first_name }} know if you can make it!</h3>
+                    <select name="status">
+                        {% if invite.status == "pending" %}
+                        <option value="accept">Accept</option>
+                        <option value="decline">Decline</option>
+                        {% elif invite.status == "accept" %}
+                        <option value="pending">Maybe</option>
+                        <option value="decline">Cancel</option>
+                        {% else %}
+                        <option value="accept">Accept</option>
+                        <option value="pending">Maybe</option>
+                        {% endif %}
+                        <input type="hidden" name="event_id" value="{{ invite.event.id }}">
+                        <input type="hidden" name="invite_id" value="{{ invite.id }}">
+                        <input type="submit">
+                    </select>
+                </form>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
